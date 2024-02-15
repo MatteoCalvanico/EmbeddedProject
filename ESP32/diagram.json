@@ -7,10 +7,10 @@
     {
       "type": "wokwi-hc-sr04",
       "id": "ultrasonic1",
-      "top": -53.71,
-      "left": -376.41,
+      "top": -51.1,
+      "left": -372.5,
       "rotate": 270,
-      "attrs": { "distance": "400" }
+      "attrs": { "distance": "296" }
     },
     {
       "type": "wokwi-led",
