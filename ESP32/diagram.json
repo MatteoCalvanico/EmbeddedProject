@@ -7,7 +7,7 @@
     {
       "type": "wokwi-hc-sr04",
       "id": "ultrasonic1",
-      "top": -51.1,
+      "top": -31.9,
       "left": -372.5,
       "rotate": 270,
       "attrs": { "distance": "296" }

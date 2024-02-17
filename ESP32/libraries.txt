@@ -2,3 +2,4 @@
 # See https://docs.wokwi.com/guides/libraries
 
 PubSubClient
+ArduinoJson
