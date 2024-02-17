@@ -6,3 +6,6 @@ Tramite il sensore di prossimità ad ultrasuoni rileviamo se una macchina si è 
 
 ## Condivisione dati 
 Oltre ad accendere le spie il sensore invierà un messaggio ad un server MQTT, con topic associato, hostato in rete. Successivamente sarà possibile visualizzare i parcheggi liberi o occupati da una pagina web che scaricherà i dati dal broker MQTT.
+
+#### Wokwi
+Il progetto è stato fatto su [Wokwi](https://wokwi.com/), il link al progetto è nel file 'wokwi-project.txt' oppure [QUI](https://wokwi.com/projects/389703246864781313).
