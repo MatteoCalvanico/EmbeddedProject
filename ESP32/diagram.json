@@ -3,7 +3,7 @@
   "author": "Matteo Calvanico",
   "editor": "wokwi",
   "parts": [
-    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 39.47, "left": -189.56, "attrs": {} },
+    { "type": "wokwi-esp32-devkit-v1", "id": "esp", "top": 43.1, "left": -187.4, "attrs": {} },
     {
       "type": "wokwi-hc-sr04",
       "id": "ultrasonic1",
@@ -12,33 +12,27 @@
       "rotate": 270,
       "attrs": { "distance": "296" }
     },
-    {
-      "type": "wokwi-led",
-      "id": "led1",
-      "top": 30.65,
-      "left": -224.88,
-      "attrs": { "color": "red" }
-    },
+    { "type": "wokwi-led", "id": "led1", "top": 34.8, "left": 51.8, "attrs": { "color": "red" } },
     {
       "type": "wokwi-resistor",
       "id": "r1",
-      "top": 132.77,
-      "left": -233.06,
+      "top": 120,
+      "left": 47.45,
       "rotate": 90,
       "attrs": { "value": "220" }
     },
     {
       "type": "wokwi-led",
       "id": "led2",
-      "top": 25.2,
-      "left": -34.6,
+      "top": 34.8,
+      "left": 13.4,
       "attrs": { "color": "green", "flip": "" }
     },
     {
       "type": "wokwi-resistor",
       "id": "r2",
-      "top": 111.96,
-      "left": -35.39,
+      "top": 120,
+      "left": 9.05,
       "rotate": 90,
       "attrs": { "value": "220" }
     },
@@ -68,7 +62,7 @@
     [ "r2:2", "esp:D4", "yellow", [ "v0" ] ],
     [ "led2:A", "r2:1", "green", [ "v0" ] ],
     [ "r3:1", "r4:2", "green", [ "h0" ] ],
-    [ "ultrasonic1:VCC", "esp:VIN", "red", [ "h-1.18", "v93.58", "h-132.59", "v94.4" ] ],
+    [ "ultrasonic1:VCC", "esp:VIN", "red", [ "v0", "v93.58", "v0", "v98.42" ] ],
     [ "r3:2", "esp:GND.1", "black", [ "h-0.18", "v31.75" ] ],
     [ "esp:GND.1", "ultrasonic1:GND", "black", [ "h-142.79", "v-208.48" ] ],
     [ "esp:GND.1", "led2:C", "black", [ "h0" ] ],
