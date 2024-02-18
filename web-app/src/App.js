@@ -103,6 +103,7 @@ useEffect(() => {
     console.log(client)
     client.on('connect', () => {
       setConnectStatus('Connected');
+      console.log('connesso')
     });
     client.on('error', (err) => {
       console.error('Connection error: ', err);
@@ -114,6 +115,7 @@ useEffect(() => {
     client.on('message', (topic, message) => {
       const payload = { topic, message: message.toString() };
       setPayload(payload);
+      console.log(payload)
     });
   }
 }, [client]);
