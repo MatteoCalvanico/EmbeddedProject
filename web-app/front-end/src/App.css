@@ -1,0 +1,22 @@
+table {
+  border-collapse: collapse; /* Combine cell borders */
+  border: 1px solid #ddd; /* Add a solid border around the table */
+  width: 100%; /* Make the table fit the container width */
+}
+
+th,
+td {
+  text-align: left; /* Align cell content left by default */
+  padding: 8px; /* Add padding to cells */
+  border: 1px solid #ddd; /* Add borders to cells */
+}
+
+th {
+  background-color: #f2f2f2; /* Add a background color to header cells */
+  font-weight: bold; /* Bold the header text */
+}
+
+tr:nth-child(even) {
+  /* Style even rows differently (optional) */
+  background-color: #f9f9f9;
+}

@@ -36,7 +36,7 @@ app.get("/", (req, res) => {
     } catch (error) {
       console.log(error);
     }
-
+    console.log("response: " + JSON.stringify(responseJson));
     res.send(responseJson);
   });
 });

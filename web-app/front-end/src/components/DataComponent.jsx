@@ -1,23 +1,44 @@
 import React, { useEffect, useState } from "react";
 
 const DataComponent = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [updatedMessages, setUpdatedMessages] = useState([]);
+
+  useEffect(() => {
+    let dataObjects = [];
+    if (!(data instanceof Array)) {
+      console.log(data);
+      return;
+    }
+    for (const item of data) {
+      const itemIndex = dataObjects.findIndex(
+        (e) => e.ESPname === item.ESPname
+      );
+      if (itemIndex >= 0) {
+        dataObjects[itemIndex] = item;
+      } else {
+        dataObjects.push(item);
+      }
+    }
+
+    setUpdatedMessages(dataObjects);
+  }, [data]);
 
   useEffect(() => {
     const fetchData = async () => {
-      setData(null);
       try {
         const response = await fetch("http://localhost:7000/");
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
-        const responseData = await response.text();
+        const responseData = await response.json();
         console.log(responseData);
-        setData(responseData);
+        setData(responseData.items);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
+    fetchData();
 
     const intervalId = setInterval(fetchData, 20000);
 
@@ -27,11 +48,23 @@ const DataComponent = () => {
 
   return (
     <div>
-      {data ? (
-        <p>Data from server: {JSON.stringify(data)}</p>
-      ) : (
-        <p>Fetching data...</p>
-      )}
+      <table>
+        <thead>
+          <tr>
+            <th>Id Parcheggio</th>
+            <th>Stato del Parcheggio</th>
+          </tr>
+        </thead>
+        <tbody>
+          {updatedMessages.map((item) => (
+            <tr>
+              <td>{item.ESPname}</td>
+              <td>{item.isParked ? "libero" : "occupato"}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {!data && <p>Fetching data...</p>}
     </div>
   );
 };
