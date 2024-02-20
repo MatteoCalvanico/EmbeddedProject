@@ -26,14 +26,17 @@ app.get("/", (req, res) => {
 
     const lastElements = rows.slice(-5);
 
-    const stringJson = `{
-      "items": [
-        ${lastElements}
-      ]
-    }`;
+    const stringJson = `{"items": [${lastElements}]}`;
 
-    const response = stringJson;
+    const response = stringJson.slice(0, stringJson.length - 3) + "]}";
 
-    res.send(response);
+    let responseJson = {};
+    try {
+      responseJson = JSON.parse(response);
+    } catch (error) {
+      console.log(error);
+    }
+
+    res.send(responseJson);
   });
 });
