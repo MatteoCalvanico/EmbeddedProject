@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const cors = require("cors");
+const streamParser = require("stream-parser");
 
 const app = express();
 const hostname = "localhost";
@@ -10,7 +11,7 @@ const outputFile = "./mqtt-subscription/output.txt";
 app.use(cors());
 
 app.listen(port, hostname, () => {
-  console.log("Server running at http://${hostname}:${port}/");
+  console.log(` Server running at http://${hostname}:${port}/`);
 });
 
 app.get("/", (req, res) => {
@@ -23,13 +24,15 @@ app.get("/", (req, res) => {
 
     const rows = data.split("\n");
 
+    const lastElements = rows.slice(-5);
+
     const stringJson = `{
       "items": [
-        ${rows}
+        ${lastElements}
       ]
     }`;
 
-    const response = JSON.parse(stringJson);
+    const response = stringJson;
 
     res.send(response);
   });

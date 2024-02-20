@@ -1,1 +1,0 @@
-./mosquitto/mosquitto_sub.exe --cert ./secrets/cert.crt --key ./secrets/private.key --cafile ./secrets/rootCA.pem -h a3gozzilrkv83v-ats.iot.us-east-1.amazonaws.com -p 8883 -q 1 -t "test" -u "admin" -P "password" > output.txt

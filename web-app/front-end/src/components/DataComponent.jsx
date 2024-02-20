@@ -11,14 +11,15 @@ const DataComponent = () => {
         if (!response.ok) {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
-        const responseData = await response.json();
+        const responseData = await response.text();
+        console.log(responseData);
         setData(responseData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    const intervalId = setInterval(fetchData, 10000);
+    const intervalId = setInterval(fetchData, 20000);
 
     // Cleanup function to clear the interval when the component unmounts
     return () => clearInterval(intervalId);
