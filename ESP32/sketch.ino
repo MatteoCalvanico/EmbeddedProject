@@ -193,7 +193,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
       client.unsubscribe(mqttTopic); //Togliamo l'iscrizione al topic di invio dati
 
-    } else if (incomingMessage == "reable") {
+    } else if (incomingMessage == "enabled") {
       Serial.println("!!! Parcheggio riattivato !!!");
       digitalWrite(YellowLed, LOW);
 
