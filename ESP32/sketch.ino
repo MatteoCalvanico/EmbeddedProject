@@ -4,8 +4,9 @@
 #include <PubSubClient.h>
 
 
-#define GreenLed 4 //Led per indicare che il parcheggio è libero
-#define RedLed 2   //Led per indicare che il parcheggio è occupato
+#define GreenLed 4   //Led per indicare che il parcheggio è libero
+#define RedLed 2     //Led per indicare che il parcheggio è occupato
+#define YellowLed 15 //Led per indicare che il parcheggio è in manutenzione
 
 #define TrigPin 18 //Collegamento fra ESP32 e sensore ad Ultrasuoni (TRIG)
 #define EchoPin 5  //Collegamento fra ESP32 e sensore ad Ultrasuoni (ECHO)
@@ -19,6 +20,7 @@ const char* psw = "";
 const char* mqttServer = "a3gozzilrkv83v-ats.iot.us-east-1.amazonaws.com";
 const int mqttPort = 8883;
 const char* mqttTopic = "test";
+const char* mqttTopicManutenzione = "disabled";
 const char* mqttUsername = "admin";
 const char* mqttPassword = "password";
 const char* ESPname = "ParcheggioONE";
@@ -164,6 +166,7 @@ void MQTTconnect(){
       Serial.println("Connesso");
 
       client.subscribe(mqttTopic);
+      client.subscribe(mqttTopicManutenzione);
     } else {
       Serial.print("FAIL, rc=");
       Serial.print(client.state());
@@ -175,11 +178,28 @@ void MQTTconnect(){
 
 //In caso di arrivo di messaggi dal broker
 void callback(char* topic, byte* payload, unsigned int length) {
-  String incommingMessage = "";
+  String incomingMessage = "";
   for (int i = 0; i < length; i++) {
-    incommingMessage+=(char)payload[i];
+    incomingMessage+=(char)payload[i];
   }
-  Serial.println("Messaggio da MQTT ["+String(topic)+"] " + incommingMessage);
+  Serial.println("Messaggio da MQTT ["+String(topic)+"] " + incomingMessage);
+
+  if (topic == mqttTopicManutenzione) { //Se dal topic di manutenzione ci viene detto di disattivare/attivare il parcheggio lo facciamo
+    if (incomingMessage == "disable") {
+      Serial.println("!!! Parcheggio in manutenzione !!!");
+      digitalWrite(YellowLed, HIGH);
+      digitalWrite(GreenLed, LOW);
+      digitalWrite(RedLed, LOW);
+
+      client.unsubscribe(mqttTopic); //Togliamo l'iscrizione al topic di invio dati
+
+    } else if (incomingMessage == "reable") {
+      Serial.println("!!! Parcheggio riattivato !!!");
+      digitalWrite(YellowLed, LOW);
+
+      client.subscribe(mqttTopic); //Riscrizione al topic per riniziare a inviare i dati
+    }
+  }
 }
 
 //Metiamo i dati in un JSON e li inviamo
@@ -215,6 +235,7 @@ void setup() {
 
   pinMode(GreenLed, OUTPUT);
   pinMode(RedLed, OUTPUT);
+  pinMode(YellowLed, OUTPUT);
   pinMode(TrigPin, OUTPUT);
   pinMode(EchoPin, INPUT);
 

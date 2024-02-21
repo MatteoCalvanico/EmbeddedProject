@@ -51,6 +51,21 @@
       "left": -72.71,
       "rotate": 90,
       "attrs": { "value": "3300" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led3",
+      "top": 34.8,
+      "left": -25,
+      "attrs": { "color": "orange" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r6",
+      "top": 120,
+      "left": -29.35,
+      "rotate": 90,
+      "attrs": { "value": "220" }
     }
   ],
   "connections": [
@@ -68,7 +83,10 @@
     [ "esp:GND.1", "led2:C", "black", [ "h0" ] ],
     [ "ultrasonic1:ECHO", "r4:1", "gold", [ "v0.69", "h203.55" ] ],
     [ "esp:D5", "r3:1", "green", [ "h29.94", "v-45.69" ] ],
-    [ "ultrasonic1:TRIG", "esp:D18", "green", [ "h178.38", "v49.08" ] ]
+    [ "ultrasonic1:TRIG", "esp:D18", "green", [ "h178.38", "v49.08" ] ],
+    [ "led3:A", "r6:1", "green", [ "v0" ] ],
+    [ "r6:2", "esp:D15", "yellow", [ "v27.6", "h-86.1" ] ],
+    [ "led3:C", "esp:GND.1", "black", [ "v0" ] ]
   ],
   "serialMonitor": { "display": "terminal", "newline": "lf" },
   "dependencies": {}
