@@ -1,0 +1,1 @@
+./mqtt-subscription/mosquitto/mosquitto_pub.exe --cert ./mqtt-subscription/secrets/cert.crt --key ./mqtt-subscription/secrets/private.key --cafile ./mqtt-subscription/secrets/rootCA.pem -h a3gozzilrkv83v-ats.iot.us-east-1.amazonaws.com -p 8883 -q 1 -t "disabled" -m "$1" -u "admin" -P "password"

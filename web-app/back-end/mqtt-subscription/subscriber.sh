@@ -1,0 +1,1 @@
+./mqtt-subscription/mosquitto/mosquitto_sub.exe --cert ./mqtt-subscription/secrets/cert.crt --key ./mqtt-subscription/secrets/private.key --cafile ./mqtt-subscription/secrets/rootCA.pem -h a3gozzilrkv83v-ats.iot.us-east-1.amazonaws.com -p 8883 -q 1 -t "test" -u "admin" -P "password" > ./mqtt-subscription/output.txt
