@@ -25,6 +25,8 @@ const char* mqttUsername = "admin";
 const char* mqttPassword = "password";
 const char* ESPname = "ParcheggioONE";
 
+int workInProgress = 0; //Indica se l'ESP deve smettere di mandare msg
+
 // Amazon Root CA 1
 static const char AWS_CERT_CA[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
@@ -184,21 +186,25 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   Serial.println("Messaggio da MQTT ["+String(topic)+"] " + incomingMessage);
 
-  if (topic == mqttTopicManutenzione) { //Se dal topic di manutenzione ci viene detto di disattivare/attivare il parcheggio lo facciamo
+  if (String(topic) == mqttTopicManutenzione) { //Se dal topic di manutenzione ci viene detto di disattivare/attivare il parcheggio lo facciamo
+    Serial.println("Check0");
     if (incomingMessage.endsWith(ESPname)){ //Ovviamente facciamo le operazioni solo se il nome dell'ESP corrisponde al nostro
-      if (incomingMessage.startsWith("disable")) {
+      Serial.println("Check1");
+      if (incomingMessage.startsWith("disable-")) {
         Serial.println("!!! Parcheggio in manutenzione !!!");
         digitalWrite(YellowLed, HIGH);
         digitalWrite(GreenLed, LOW);
         digitalWrite(RedLed, LOW);
 
-        client.unsubscribe(mqttTopic); //Togliamo l'iscrizione al topic di invio dati
+        client.unsubscribe(mqttTopic); //Togliamo l'iscrizione al topic
+        workInProgress = 1;
 
-      } else if (incomingMessage.startsWith("enabled")) {
+      } else if (incomingMessage.startsWith("enabled-")) {
         Serial.println("!!! Parcheggio riattivato !!!");
         digitalWrite(YellowLed, LOW);
 
-        client.subscribe(mqttTopic); //Riscrizione al topic per riniziare a inviare i dati
+        client.subscribe(mqttTopic); //Riscrizione al topic
+        workInProgress = 0;
       }
     }
   }
@@ -213,7 +219,11 @@ void publisJSON(){
   data["isParked"] = isParked();
   serializeJson(data, dataJSON);
 
-  client.publish(mqttTopic, dataJSON);
+  if(workInProgress == 0){
+    client.publish(mqttTopic, dataJSON);
+  }else{
+    Serial.println("!!! Messaggio non inviato, WORK IN PROGRESS IN THE PARKING !!!");
+  }
 }
 
 
