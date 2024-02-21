@@ -186,7 +186,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   if (topic == mqttTopicManutenzione) { //Se dal topic di manutenzione ci viene detto di disattivare/attivare il parcheggio lo facciamo
     if (incomingMessage.endsWith(ESPname)){ //Ovviamente facciamo le operazioni solo se il nome dell'ESP corrisponde al nostro
-      if (incomingMessage == "disable") {
+      if (incomingMessage.startsWith("disable")) {
         Serial.println("!!! Parcheggio in manutenzione !!!");
         digitalWrite(YellowLed, HIGH);
         digitalWrite(GreenLed, LOW);
@@ -194,7 +194,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
         client.unsubscribe(mqttTopic); //Togliamo l'iscrizione al topic di invio dati
 
-      } else if (incomingMessage == "enabled") {
+      } else if (incomingMessage.startsWith("enabled")) {
         Serial.println("!!! Parcheggio riattivato !!!");
         digitalWrite(YellowLed, LOW);
 
