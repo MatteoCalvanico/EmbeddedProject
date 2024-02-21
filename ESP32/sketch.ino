@@ -185,7 +185,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.println("Messaggio da MQTT ["+String(topic)+"] " + incomingMessage);
 
   if (topic == mqttTopicManutenzione) { //Se dal topic di manutenzione ci viene detto di disattivare/attivare il parcheggio lo facciamo
-    if (incomingMessage.contains(ESPname)){ //Ovviamente facciamo le operazioni solo se il nome dell'ESP corrisponde al nostro
+    if (incomingMessage.endsWith(ESPname)){ //Ovviamente facciamo le operazioni solo se il nome dell'ESP corrisponde al nostro
       if (incomingMessage == "disable") {
         Serial.println("!!! Parcheggio in manutenzione !!!");
         digitalWrite(YellowLed, HIGH);
