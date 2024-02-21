@@ -180,24 +180,26 @@ void MQTTconnect(){
 void callback(char* topic, byte* payload, unsigned int length) {
   String incomingMessage = "";
   for (int i = 0; i < length; i++) {
-    incomingMessage+=(char)payload[i];
+    incomingMessage += (char)payload[i];
   }
   Serial.println("Messaggio da MQTT ["+String(topic)+"] " + incomingMessage);
 
   if (topic == mqttTopicManutenzione) { //Se dal topic di manutenzione ci viene detto di disattivare/attivare il parcheggio lo facciamo
-    if (incomingMessage == "disable") {
-      Serial.println("!!! Parcheggio in manutenzione !!!");
-      digitalWrite(YellowLed, HIGH);
-      digitalWrite(GreenLed, LOW);
-      digitalWrite(RedLed, LOW);
+    if (incomingMessage.contains(ESPname)){ //Ovviamente facciamo le operazioni solo se il nome dell'ESP corrisponde al nostro
+      if (incomingMessage == "disable") {
+        Serial.println("!!! Parcheggio in manutenzione !!!");
+        digitalWrite(YellowLed, HIGH);
+        digitalWrite(GreenLed, LOW);
+        digitalWrite(RedLed, LOW);
 
-      client.unsubscribe(mqttTopic); //Togliamo l'iscrizione al topic di invio dati
+        client.unsubscribe(mqttTopic); //Togliamo l'iscrizione al topic di invio dati
 
-    } else if (incomingMessage == "enabled") {
-      Serial.println("!!! Parcheggio riattivato !!!");
-      digitalWrite(YellowLed, LOW);
+      } else if (incomingMessage == "enabled") {
+        Serial.println("!!! Parcheggio riattivato !!!");
+        digitalWrite(YellowLed, LOW);
 
-      client.subscribe(mqttTopic); //Riscrizione al topic per riniziare a inviare i dati
+        client.subscribe(mqttTopic); //Riscrizione al topic per riniziare a inviare i dati
+      }
     }
   }
 }
