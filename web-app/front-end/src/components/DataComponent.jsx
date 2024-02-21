@@ -6,7 +6,7 @@ const DataComponent = () => {
   const [updatedMessages, setUpdatedMessages] = useState([]);
 
   useEffect(() => {
-    let dataObjects = [];
+    let dataObjects = updatedMessages;
     if (!(data instanceof Array)) {
       console.log(data);
       return;
@@ -61,7 +61,7 @@ const DataComponent = () => {
           {updatedMessages.map((item) => (
             <tr>
               <td>{item.ESPname}</td>
-              <td>{item.isParked ? "libero" : "occupato"}</td>
+              <td>{item.isParked ? "occupato" : "libero"}</td>
               <td>
                 <EspActions espId={item.ESPname} />
               </td>
