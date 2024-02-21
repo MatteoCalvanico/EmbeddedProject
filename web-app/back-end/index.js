@@ -1,13 +1,17 @@
 const express = require("express");
 const fs = require("fs");
 const cors = require("cors");
-const streamParser = require("stream-parser");
+const bodyParser = require("body-parser");
+const util = require("node:util");
+const exec = util.promisify(require("node:child_process").exec);
 
 const app = express();
+
 const hostname = "localhost";
 const port = 7000;
 const outputFile = "./mqtt-subscription/output.txt";
 
+app.use(bodyParser.json());
 app.use(cors());
 
 app.listen(port, hostname, () => {
@@ -39,4 +43,35 @@ app.get("/", (req, res) => {
     console.log("response: " + JSON.stringify(responseJson));
     res.send(responseJson);
   });
+});
+
+app.post("/set-esp-status", async (req, res) => {
+  try {
+    const { status, ESPname } = req.body;
+
+    if (!status) {
+      throw new Error("Filename is required.");
+    }
+
+    const command =
+      "sh ./mqtt-subscription/publisher.sh " + status + "-" + ESPname;
+
+    if (status === "disable") {
+      console.log("ok 1");
+      //
+    } else if (status === "enabled") {
+      console.log("ok 2");
+      //
+    } else {
+      res.status(200).send('status property must be "disable" or "enabled"');
+      return;
+    }
+
+    await exec(command); //TODO move
+
+    res.status(200).send(`File ${status}.txt created successfully.`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error creating file.");
+  }
 });

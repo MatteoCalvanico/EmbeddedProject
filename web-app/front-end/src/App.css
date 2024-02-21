@@ -20,3 +20,19 @@ tr:nth-child(even) {
   /* Style even rows differently (optional) */
   background-color: #f9f9f9;
 }
+
+.inline-container {
+  display: inline-block;
+  /* Add other styles for your container here, like: */
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px;
+}
+
+.red-button {
+  color: red;
+}
+
+.green-button {
+  color: green;
+}

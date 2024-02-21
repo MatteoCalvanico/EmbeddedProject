@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import EspActions from "./EspActions";
 
 const DataComponent = () => {
   const [data, setData] = useState([]);
@@ -53,6 +54,7 @@ const DataComponent = () => {
           <tr>
             <th>Id Parcheggio</th>
             <th>Stato del Parcheggio</th>
+            <th>Azioni ESP</th>
           </tr>
         </thead>
         <tbody>
@@ -60,6 +62,9 @@ const DataComponent = () => {
             <tr>
               <td>{item.ESPname}</td>
               <td>{item.isParked ? "libero" : "occupato"}</td>
+              <td>
+                <EspActions espId={item.ESPname} />
+              </td>
             </tr>
           ))}
         </tbody>
