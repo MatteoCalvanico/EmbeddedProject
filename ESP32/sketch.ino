@@ -226,13 +226,13 @@ void setup() {
   //END Wi-Fi connection
 
 
-  //START MQTT connection
+  //START MQTT init
   espClient.setCACert(AWS_CERT_CA);
   espClient.setCertificate(AWS_CERT_CRT);
   espClient.setPrivateKey(AWS_CERT_PRIVATE);
   client.setServer(mqttServer, mqttPort);
   client.setCallback(callback);
-  //END MQTT connection
+  //END MQTT init
 
 
   pinMode(GreenLed, OUTPUT);
