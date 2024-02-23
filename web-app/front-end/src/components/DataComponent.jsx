@@ -22,6 +22,16 @@ const DataComponent = () => {
       }
     }
 
+    for (let i = 0; i < dataObjects.length; i++) {
+      const itemIndex = data.findIndex(
+        (e) => e.ESPname === dataObjects[i].ESPname
+      );
+      if (itemIndex < 0) {
+        console.log("not found");
+        dataObjects[i].isParked = null;
+      }
+    }
+
     setUpdatedMessages(dataObjects);
   }, [data]);
 
@@ -47,6 +57,17 @@ const DataComponent = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  const renderMessage = (isParked) => {
+    console.log("is P: " + isParked);
+    if (isParked === null) {
+      return "Non reggiungibile";
+    } else if (isParked) {
+      return "Occupato";
+    } else {
+      return "Libero";
+    }
+  };
+
   return (
     <div>
       <table>
@@ -61,7 +82,7 @@ const DataComponent = () => {
           {updatedMessages.map((item) => (
             <tr>
               <td>{item.ESPname}</td>
-              <td>{item.isParked ? "occupato" : "libero"}</td>
+              <td>{renderMessage(item.isParked)}</td>
               <td>
                 <EspActions espId={item.ESPname} />
               </td>
