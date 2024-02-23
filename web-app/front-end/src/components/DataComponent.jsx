@@ -8,7 +8,6 @@ const DataComponent = () => {
   useEffect(() => {
     let dataObjects = updatedMessages;
     if (!(data instanceof Array)) {
-      console.log(data);
       return;
     }
     for (const item of data) {
@@ -27,7 +26,6 @@ const DataComponent = () => {
         (e) => e.ESPname === dataObjects[i].ESPname
       );
       if (itemIndex < 0) {
-        console.log("not found");
         dataObjects[i].isParked = null;
       }
     }
@@ -43,7 +41,6 @@ const DataComponent = () => {
           throw new Error(`Network response was not ok: ${response.status}`);
         }
         const responseData = await response.json();
-        console.log(responseData);
         setData(responseData.items);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -58,7 +55,6 @@ const DataComponent = () => {
   }, []);
 
   const renderMessage = (isParked) => {
-    console.log("is P: " + isParked);
     if (isParked === null) {
       return "Non reggiungibile";
     } else if (isParked) {
