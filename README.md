@@ -32,6 +32,8 @@ E' possibile consultare la documentazione aws per l'inizializzazione di un serve
 La connessione al server necessità che il client dichiari uno user name ed una password che sono state configurate durante l'inizializzazione del server MQTT.
 
 Inoltre per far in modo che la vm cloud accetti la connessione è necessario allegare alle richieste tre diversi certificati di sicurezza.
-Questi certificati si trovano in 'web-app\back-end\mqtt-subscription\secrets'.
+Questi certificati si trovano in una cartella drive condivisa tra i membri del progetto. Chiedere a giacomo.ghinelli@studio.unibo.it per l'accesso alla cartella.
+Per autenticare gli applicativi web-app/back-end ed ESP32/ è necessario:
 
-Da notare che di norma tali certificati non andrebbero mai caricati nella repository del progetto ma dovrebbero essere condivisi in modo più sicuro e meno accessibile.
+1. Copiare la cartella secrets scaricata dal drive in web-app/back-end/mqtt-subscription/
+2. Copiare il contenuto dei certificati dove appositamente indicato nel file ESP32/sketch.ino
