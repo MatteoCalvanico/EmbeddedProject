@@ -1,4 +1,7 @@
 # ESP32 IoT sensor
+<p align = "center">
+    <img src="/ESP32/EmbeddedProject.png"/>
+</p>
 
 ## Rilevazione e spie
 L'idea alla base è quella di utilizzare diversi ESP32 con sensori e led per indicare se un parcheggio è libero o meno.
